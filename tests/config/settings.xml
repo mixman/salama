@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurations>
+	<configuration>
+		<settings>		
+		</settings>
+		
+		<settings environment="testing">
+			<debug>true</debug>		
+		</settings>
+		
+	</configuration>
+</configurations>

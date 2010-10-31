@@ -1,0 +1,35 @@
+PHPSalama - A PHP 5.3+ ORM
+=========================
+Version 0.1
+
+Salama is a PHP 5.3+ ORM built with a mission. Play to the strengths of PHP, offer convenient syntax, be fast and flexible.
+
+    class User extends Model {
+        var $name = 'type=CharField,maxLength=50'
+    }
+
+    $user = new User();
+    $user->name = "BobbyTables";
+    $user->save()
+
+    $users = User::all();
+    for($users as $user) {
+        echo $user->name;
+    }
+
+    $user = User::where(q::name('BobbyTables'))->limit(1);
+    echo $user->name;
+
+Installation
+============
+
+    require '/installation-path/salama/Salama.php';
+    $settings = array('config_dir'=>dirname(__FILE__).'/config');
+    Salama::bootstrap($settings);
+
+See tests/config for required configuration.
+
+Usage
+=====
+
+See tests/queries/QueryTest.php for a primer until better documentation.

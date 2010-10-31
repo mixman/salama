@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configurations>
+
+    <backend>
+        <configuration>
+            <encoding>utf-8</encoding>
+            <default_name>default</default_name>
+        </configuration>
+
+        <configuration name="mysql">
+            <database>mysql</database>
+            <driver>pdo</driver>
+            <setting>
+                <attr_errmode>ERRMODE_EXCEPTION</attr_errmode>
+                <attr_persistent>false</attr_persistent>
+                <attr_emulate_prepares>true</attr_emulate_prepares>
+            </setting>
+        </configuration>
+
+        <configuration name="mongo">
+            <database>mongo</database>
+            <driver>mongo</driver>
+        </configuration>
+   </backend>
+
+	<configuration environment="testing">
+		<database name="default">
+			<dsn>mysql://root:t44t@localhost/salamatest</dsn>
+		</database>	
+	</configuration>
+	
+</configurations>
