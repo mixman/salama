@@ -153,7 +153,7 @@ class SalamaController extends SalamaBase implements ArrayAccess, IteratorAggreg
     # methods that evaluate the Query immediately
     #
 
-	public function update($values=array()) {
+    public function update($values=array()) {
         foreach ($values as $k => $v) {
             $this->getQuery()->setItem($k, $v);
         }

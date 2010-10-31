@@ -366,7 +366,6 @@ class SalamaBuild {
     }
 
     # create Table aliases based on given rule
-
     public function getTableAlias($case, $table) {
         switch ($case) {
             # HelloWorld => hw
@@ -389,7 +388,6 @@ class SalamaBuild {
 
     # split camel cased words by their caps
     # http://fi.php.net/manual/en/function.ucwords.php#49303
-
     function unCamelCase($str) {
         # if lowercase first char, skip unCamelCasing (as there are none). return str in array.
         if ($str[0] !== ucfirst($str[0])) {
@@ -507,7 +505,6 @@ class SalamaBuild {
 
     # @TODO build _chain
     # get full model name for a relation alias
-
     public static function getModelForRelation($relation) {
         #
     }
