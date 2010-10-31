@@ -5,7 +5,6 @@ class SalamaQuery extends SalamaControllerSwitch {
     public static $SELECT = 'select';
     public static $UPDATE = 'update';
     public static $DELETE = 'delete';
-
     var $model = null;
     var $model_relation = null;
     var $parent = null;
@@ -45,85 +44,86 @@ class SalamaQuery extends SalamaControllerSwitch {
     }
 
     public function jobs($new=false) {
-        if($new) {
+        if ($new) {
             $name = get_class($this->database->getJobClass($this));
             return new $name($this);
         }
 
-        if(!isset($this->jobs)) {
+        if (!isset($this->jobs)) {
             $this->jobs = $this->database->getJobClass($this);
         }
         return $this->jobs;
     }
 
-    public function is($model) { 
+    public function is($model) {
         return ($this->model == $model);
     }
 
-	public function findTableByAlias($alias) {
-		foreach($this->_involved_tables as $k=>$v) {
-			if($v['alias'] == $alias) {
-				# return table, or its relational-name as defined by hasOne/...
+    public function findTableByAlias($alias) {
+        foreach ($this->_involved_tables as $k => $v) {
+            if ($v['alias'] == $alias) {
+                # return table, or its relational-name as defined by hasOne/...
                 $table = isset($v['rel']) ? $v['rel'] : $v['table'];
                 break;
-			}
-		}
-		return $table;
-	}
+            }
+        }
+        return $table;
+    }
 
-	/**
-	 * Hydrate column results to their corresponding Table
-	 * eg. u__id, uc__posted => User array(id), UserComment array(posted)
-	 * @param array data
-	 * @param string tableAlias of a Table
-	 * @param bool strict?
-	 * @return array
-	 */
-	public function hydrateResult($data, $tableAlias, $strict=true) {
-		# Hydrate result based on alias=>table mapping stored in ::_table
-		# - result ($data) can be 0, 1 or many rows
-		$result = array();
-		foreach($data as $k=>$field) {
-			$tmp = array();
-			$alias = '__';
-			foreach($field as $name=>$value) {
+    /**
+     * Hydrate column results to their corresponding Table
+     * eg. u__id, uc__posted => User array(id), UserComment array(posted)
+     * @param array data
+     * @param string tableAlias of a Table
+     * @param bool strict?
+     * @return array
+     */
+    public function hydrateResult($data, $tableAlias, $strict=true) {
+        # Hydrate result based on alias=>table mapping stored in ::_table
+        # - result ($data) can be 0, 1 or many rows
+        $result = array();
+        foreach ($data as $k => $field) {
+            $tmp = array();
+            $alias = '__';
+            foreach ($field as $name => $value) {
                 # @BUG first lookup is __.__ ?
-				$marker = $alias.'__';
-				if(strpos($name, $marker) !== false) {
-					$realFieldName = substr($name, strlen($marker));
-				} else {
-					list($alias, $realFieldName) = explode('__', $name);
-					$table = $this->findTableByAlias($alias); # small optimization w/table var
-				}
-				# save only fields that belong to Table?
-				if($strict) {
-					if($tableAlias == $alias) $tmp[$realFieldName] = $value;
-				} else {
-					$tmp[$realFieldName] = $value;
-				}
-			} // endforeach
-			$tableAliasTable = $table;
-			if($strict) {
+                $marker = $alias . '__';
+                if (strpos($name, $marker) !== false) {
+                    $realFieldName = substr($name, strlen($marker));
+                } else {
+                    list($alias, $realFieldName) = explode('__', $name);
+                    $table = $this->findTableByAlias($alias); # small optimization w/table var
+                }
+                # save only fields that belong to Table?
+                if ($strict) {
+                    if ($tableAlias == $alias)
+                        $tmp[$realFieldName] = $value;
+                } else {
+                    $tmp[$realFieldName] = $value;
+                }
+            } // endforeach
+            $tableAliasTable = $table;
+            if ($strict) {
                 $tableAliasTable = $this->findTableByAlias($tableAlias);
             }
-			$result[$tableAliasTable][$k] = $tmp;
-		} // endforeach
-		return $result;
-	}
+            $result[$tableAliasTable][$k] = $tmp;
+        } // endforeach
+        return $result;
+    }
 
     ################################
     # modified model fields accessors
     ################################
 
-	public function setDirty($value) {
-        if(!$this->isDirty($value)) {
+    public function setDirty($value) {
+        if (!$this->isDirty($value)) {
             $this->_dirty[] = $value;
         }
     }
 
-	public function setUnmodified($value) {
+    public function setUnmodified($value) {
         $key = array_search($value, $this->_dirty);
-        if($key) {
+        if ($key) {
             unset($this->_dirty[$key]);
         }
     }
@@ -132,22 +132,23 @@ class SalamaQuery extends SalamaControllerSwitch {
         $this->_dirty = array();
     }
 
-	public function isDirty($value) {
+    public function isDirty($value) {
         return in_array($value, $this->_dirty);
     }
 
-	public function getDirty($value) {
+    public function getDirty($value) {
         $key = array_search($value, $this->_dirty);
-        if($key) {
+        if ($key) {
             return $this->_dirty[$key];
         } else {
             return null;
         }
     }
 
-	public function getAllDirty() {
+    public function getAllDirty() {
         return $this->_dirty;
     }
+
 }
 
 ?>

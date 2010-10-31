@@ -3,4 +3,5 @@
 interface SalamaDatabase {
     public function getBuilder();
 }
+
 ?>

@@ -12,26 +12,26 @@
  * 
  */
 class SalamaRunner {
-	public function run($action) {
-		switch($action) {
-			case 'build':
+    public function run($action) {
+        switch ($action) {
+            case 'build':
                 $this->build();
-				break;
-			case 'syncdb':
+                break;
+            case 'syncdb':
                 $this->syncdb();
-				break;
-			case 'test':
+                break;
+            case 'test':
                 $this->test();
-				break;				
-			default:
-				throw new Exception("no action specified for: {$action}");		
-		}
-	}
+                break;
+            default:
+                throw new Exception("no action specified for: {$action}");
+        }
+    }
 
     function build() {
         $b = new SalamaBuild();
         $classes = $b->getModelnames();
-        foreach($classes as $c) {
+        foreach ($classes as $c) {
             $b->genTable($c);
         }
         # [create] has belongsTo fields as they are fields
@@ -55,8 +55,8 @@ class SalamaRunner {
         $sd = '<?php class SalamaData { public static $c = DATA_HOLDER; public static $rel = REL_HOLDER; } ?>';
         $sd = str_replace('DATA_HOLDER', $data_php, $sd);
         $sd = str_replace('REL_HOLDER', $rel_php, $sd);
-        file_put_contents($cache."/SalamaData_{$env}.php", $sd);
-        file_put_contents($cache."/build_cache_{$env}.php", serialize($data));
+        file_put_contents($cache . "/SalamaData_{$env}.php", $sd);
+        file_put_contents($cache . "/build_cache_{$env}.php", serialize($data));
     }
 
     function syncdb() {
@@ -64,7 +64,7 @@ class SalamaRunner {
         # - separate build to build+build-write ?
         $b = new SalamaBuild();
         $classes = $b->getModelnames();
-        foreach($classes as $c) {
+        foreach ($classes as $c) {
             $b->genTable($c);
         }
         $b->processConstraints();
@@ -73,11 +73,11 @@ class SalamaRunner {
         $sql = implode("\n", $r);
         # databases in use
         # @TODO cleanup. duplicate code from SalamaSuite.php
-        $xml = simplexml_load_string(file_get_contents(Salama::$_settings['config'].'/databases.xml'));
+        $xml = simplexml_load_string(file_get_contents(Salama::$_settings['config'] . '/databases.xml'));
         $env = Salama::$_settings['env'];
         $res = $xml->xpath("//configuration[@environment='{$env}']/database");
         $dbInUse = array();
-        foreach($res as $row) {
+        foreach ($res as $row) {
             $dsn = trim($row->dsn);
             $parts = explode('/', $dsn);
             $db = array_pop($parts);
