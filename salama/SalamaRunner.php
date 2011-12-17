@@ -3,13 +3,13 @@
 /**
  * ACTIONS
  * =======
- * 
+ *
  * build:
  * prepare models.php cache
- * 
+ *
  * syncdb:
  * insert models.php information into database
- * 
+ *
  */
 class SalamaRunner {
     public function run($action) {

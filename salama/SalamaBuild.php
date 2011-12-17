@@ -99,7 +99,7 @@ class SalamaBuild {
     }
 
     public function processPks() {
-        
+
     }
 
     /**
@@ -329,8 +329,8 @@ class SalamaBuild {
      * Convert Table class names to conform to those used in the database
      * @param string CaseType
      * @param string TableClassName
-     * @return string TableName 
-     * 
+     * @return string TableName
+     *
      * Cases (eg. ForumThread):
      * UpperCamelCase - ForumThread
      * LowerCamelCase - forumThread
@@ -440,7 +440,7 @@ class SalamaBuild {
     }
 
     public function run() {
-        
+
     }
 
     /**
